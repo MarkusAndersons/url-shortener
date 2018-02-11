@@ -15,11 +15,10 @@ func main() {
 	if port == "" {
 		port = constants.Port
 	}
-	uri := constants.Hostname + ":" + port
 
 	router := mux.NewRouter()
 	router.HandleFunc("/store", api.Store).Methods("POST")
 	router.HandleFunc("/{shortUrl}", api.Get).Methods("GET")
-	log.Println("Starting server at", uri)
-	log.Fatal(http.ListenAndServe(uri, router))
+	log.Println("Starting server at :" + port)
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
