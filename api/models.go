@@ -7,7 +7,7 @@ type Ok interface {
 
 // ErrRequired is the error returned if a required field in a request is missing
 type ErrRequired struct {
-	Msg string
+	Msg string `json:"error"`
 }
 
 func (e ErrRequired) Error() string {
@@ -22,7 +22,7 @@ type Request struct {
 // OK validates a received request
 func (r *Request) OK() error {
 	if len(r.URL) == 0 {
-		return ErrRequired{Msg: "url"}
+		return ErrRequired{Msg: "url must be specified"}
 	}
 	return nil
 }

@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/markusandersons/url-shortener/api"
 )
 
 const (
@@ -23,6 +24,8 @@ func main() {
 	uri := HOSTNAME + ":" + port
 
 	router := mux.NewRouter()
+	router.HandleFunc("/store", api.Store).Methods("POST")
+	router.HandleFunc("/{shortUrl}", api.Get).Methods("GET")
 	log.Println("Starting server at", uri)
 	log.Fatal(http.ListenAndServe(uri, router))
 }

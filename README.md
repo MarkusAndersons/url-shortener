@@ -7,4 +7,5 @@ This app is just a fun way for me to learn some Go.
 - Add test coverage
 - Add authentication to create url
 - Persist generated URLs to disk
+- Add concurrency safety to accessing the data store
 - Deploy demo on Heroku (Docker?)
