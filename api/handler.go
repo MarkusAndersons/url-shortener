@@ -2,10 +2,14 @@
 package api
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"log"
 	"net/http"
 	"net/url"
+
+	"github.com/markusandersons/url-shortener/constants"
 
 	"github.com/gorilla/mux"
 )
@@ -43,13 +47,16 @@ func Get(w http.ResponseWriter, r *http.Request) {
 }
 
 func storeValue(request Request) string {
-	// TODO
-	return ""
+	short := createShortURL(request.URL)
+	dataStore[short] = request.URL
+	return short
 }
 
 func createShortURL(url string) string {
-	// TODO
-	return ""
+	hasher := sha256.New()
+	hasher.Write([]byte(url))
+	short := hex.EncodeToString(hasher.Sum(nil))
+	return short[len(short)-constants.ShortLen:]
 }
 
 func getValue(key string) string {

@@ -7,21 +7,15 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/markusandersons/url-shortener/api"
-)
-
-const (
-	// PORT is the default port number to use if none specified
-	PORT string = "8080"
-	// HOSTNAME is the host to run the server on
-	HOSTNAME string = "127.0.0.1"
+	"github.com/markusandersons/url-shortener/constants"
 )
 
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = PORT
+		port = constants.Port
 	}
-	uri := HOSTNAME + ":" + port
+	uri := constants.Hostname + ":" + port
 
 	router := mux.NewRouter()
 	router.HandleFunc("/store", api.Store).Methods("POST")
