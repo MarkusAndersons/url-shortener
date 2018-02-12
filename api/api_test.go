@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/markusandersons/url-shortener/api"
+	"github.com/MarkusAndersons/url-shortener/api"
 )
 
 // Model Tests

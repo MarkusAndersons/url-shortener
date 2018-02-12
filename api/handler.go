@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/markusandersons/url-shortener/constants"
+	"github.com/MarkusAndersons/url-shortener/constants"
 
 	"github.com/gorilla/mux"
 )

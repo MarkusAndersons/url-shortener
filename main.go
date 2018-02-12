@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/MarkusAndersons/url-shortener/api"
+	"github.com/MarkusAndersons/url-shortener/constants"
 	"github.com/gorilla/mux"
-	"github.com/markusandersons/url-shortener/api"
-	"github.com/markusandersons/url-shortener/constants"
 )
 
 func main() {
