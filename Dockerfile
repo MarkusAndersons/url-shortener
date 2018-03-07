@@ -5,6 +5,6 @@ ADD . /app
 WORKDIR /app
 
 RUN go get -d -v ./...
-RUN go build -o main -v .
+RUN go build -o short -v .
 
-CMD ["/app/main"]
+CMD "/app/short"
