@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"log"
 	"net/http"
 	"os"
@@ -16,7 +17,12 @@ func main() {
 		port = constants.Port
 	}
 
-	if err := api.DbInit(); err != nil {
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	if err != nil {
+		log.Fatalf("Error opening database: %q", err)
+	}
+	database := api.Database{Db: db}
+	if err := api.DbInit(&database); err != nil {
 		log.Fatalf("Error creating database")
 	}
 
