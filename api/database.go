@@ -39,13 +39,13 @@ func DbInit() error {
 
 // DbStore stores a key-value pair
 func DbStore(key string, value string) error {
-	query := fmt.Sprintf("INSERT INTO links (short, long) VALUES (\"%s\", \"%s\")", key, value)
+	query := fmt.Sprintf("INSERT INTO links (short, long) VALUES ('%s', '%s')", key, value)
 	return exec(query)
 }
 
 // DbGet returns the stored value for the given key
 func DbGet(key string) DbResult {
-	query := fmt.Sprintf("SELECT long FROM links WHERE short=\"%s\"", key)
+	query := fmt.Sprintf("SELECT long FROM links WHERE short='%s'", key)
 	rows, err := db.Query(query)
 	if err != nil {
 		return DbResult{Value: "", Error: DatabaseErr{Msg: err.Error()}}
