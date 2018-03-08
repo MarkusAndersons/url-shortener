@@ -52,6 +52,7 @@ func DbGet(key string) DbResult {
 	}
 	defer rows.Close()
 	var longLink string
+	rows.Next()
 	if err := rows.Scan(&longLink); err != nil {
 		return DbResult{Value: "", Error: DatabaseErr{Msg: err.Error()}}
 	}
