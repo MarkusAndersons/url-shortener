@@ -24,12 +24,18 @@ func Store(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	shortURL := storeValue(request)
-	if len(shortURL) == 0 {
+	if shortURL.Error != nil {
+		logResponse(r.URL, 500)
+		w.WriteHeader(500)
+		json.NewEncoder(w).Encode(shortURL.Error)
+		return
+	}
+	if len(shortURL.Value) == 0 {
 		logResponse(r.URL, 500)
 		w.WriteHeader(500)
 		return
 	}
-	response := Response{ShortURL: shortURL}
+	response := Response{ShortURL: shortURL.Value}
 	logResponse(r.URL, 200)
 	json.NewEncoder(w).Encode(response)
 }
@@ -49,10 +55,12 @@ func Get(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, longURL.Value, 301)
 }
 
-func storeValue(request Request) string {
+func storeValue(request Request) DbResult {
 	short := createShortURL(request.URL)
-	DbStore(short, request.URL)
-	return short
+	if err := DbStore(short, request.URL); err != nil {
+		return DbResult{Value: "", Error: err}
+	}
+	return DbResult{Value: short, Error: nil}
 }
 
 func createShortURL(url string) string {
