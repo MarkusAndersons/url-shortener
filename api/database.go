@@ -45,7 +45,7 @@ func DbStore(key string, value string) error {
 
 // DbGet returns the stored value for the given key
 func DbGet(key string) DbResult {
-	query := fmt.Sprintf("SELECT long FROM links WHERE short=%s", key)
+	query := fmt.Sprintf("SELECT long FROM links WHERE short=\"%s\"", key)
 	rows, err := db.Query(query)
 	if err != nil {
 		return DbResult{Value: "", Error: DatabaseErr{Msg: err.Error()}}
