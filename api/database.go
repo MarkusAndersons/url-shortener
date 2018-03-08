@@ -39,7 +39,7 @@ func DbInit() error {
 
 // DbStore stores a key-value pair
 func DbStore(key string, value string) error {
-	query := fmt.Sprintf("INSERT INTO links VALUES(%s, %s)", key, value)
+	query := fmt.Sprintf("INSERT INTO links (short, long) VALUES (%s, %s)", key, value)
 	return exec(query)
 }
 
