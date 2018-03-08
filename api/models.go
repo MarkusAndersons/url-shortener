@@ -23,6 +23,12 @@ func (e ErrRequired) Error() string {
 	return e.Msg
 }
 
+// DbResult is the value returned from a database
+type DbResult struct {
+	Value string
+	Error error
+}
+
 // Request is the in memory representation of a JSON request
 type Request struct {
 	URL string `json:"url"`

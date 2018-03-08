@@ -14,9 +14,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// TODO replace this with a database
-var dataStore = make(map[string]string)
-
 // Store the requested URL in the data store and returns the shortened URL
 func Store(w http.ResponseWriter, r *http.Request) {
 	var request Request
@@ -42,13 +39,19 @@ func Get(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	shortURL := params["shortUrl"]
 	longURL := getValue(shortURL)
-	logRedirect(shortURL, longURL)
-	http.Redirect(w, r, longURL, 301)
+	if longURL.Error != nil {
+		logResponse(r.URL, 500)
+		w.WriteHeader(500)
+		json.NewEncoder(w).Encode(longURL.Error)
+		return
+	}
+	logRedirect(shortURL, longURL.Value)
+	http.Redirect(w, r, longURL.Value, 301)
 }
 
 func storeValue(request Request) string {
 	short := createShortURL(request.URL)
-	dataStore[short] = request.URL
+	DbStore(short, request.URL)
 	return short
 }
 
@@ -59,8 +62,8 @@ func createShortURL(url string) string {
 	return short[len(short)-constants.ShortLen:]
 }
 
-func getValue(key string) string {
-	return dataStore[key]
+func getValue(key string) DbResult {
+	return DbGet(key)
 }
 
 func decode(r *http.Request, v interface{}) error {
