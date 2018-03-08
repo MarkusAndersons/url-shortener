@@ -16,6 +16,10 @@ func main() {
 		port = constants.Port
 	}
 
+	if err := api.DbInit(); err != nil {
+		log.Fatalf("Error creating database")
+	}
+
 	router := mux.NewRouter()
 	router.HandleFunc("/store", api.Store).Methods("POST")
 	router.HandleFunc("/{shortUrl}", api.Get).Methods("GET")

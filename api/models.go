@@ -5,6 +5,15 @@ type Ok interface {
 	OK() error
 }
 
+// DatabaseErr is the error returned if an error occurs with database access
+type DatabaseErr struct {
+	Msg string `json:"error"`
+}
+
+func (e DatabaseErr) Error() string {
+	return e.Msg
+}
+
 // ErrRequired is the error returned if a required field in a request is missing
 type ErrRequired struct {
 	Msg string `json:"error"`

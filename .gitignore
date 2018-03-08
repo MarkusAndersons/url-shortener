@@ -13,3 +13,6 @@ url-shortener
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
+
+# macOS annoying things
+.DS_Store

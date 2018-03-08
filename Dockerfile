@@ -5,6 +5,6 @@ ADD . /app
 WORKDIR /app
 
 RUN go get -d -v ./...
-RUN go build -o short -v .
+RUN go build -o "url-shortener" -v .
 
-CMD "/app/short"
+CMD "/app/url-shortener"
