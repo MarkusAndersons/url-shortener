@@ -75,21 +75,21 @@ type RowsImpl struct {
 // Exec executes a query without returning any rows.
 // The args are for any placeholder parameters in the query.
 func (d *Database) Exec(query string, args ...interface{}) (sql.Result, error) {
-	return db.Exec(query, args)
+	return d.Db.Exec(query, args)
 }
 
 // Query executes a query that returns rows, typically a SELECT.
 // The args are for any placeholder parameters in the query.
 func (d *Database) Query(query string, args ...interface{}) (Rows, error) {
-	r, err := db.Query(query, args)
-	return &RowsImpl{R: r.(*sql.Rows)}, err
+	r, err := d.Db.Query(query, args)
+	return RowsImpl{R: r}, err
 }
 
 // Close closes the Rows, preventing further enumeration. If Next is called
 // and returns false and there are no further result sets,
 // the Rows are closed automatically and it will suffice to check the
 // result of Err. Close is idempotent and does not affect the result of Err.
-func (r *RowsImpl) Close() error {
+func (r RowsImpl) Close() error {
 	return r.R.Close()
 }
 
@@ -99,13 +99,13 @@ func (r *RowsImpl) Close() error {
 // the two cases.
 //
 // Every call to Scan, even the first one, must be preceded by a call to Next.
-func (r *RowsImpl) Next() bool {
+func (r RowsImpl) Next() bool {
 	return r.R.Next()
 }
 
 // Scan copies the columns in the current row into the values pointed
 // at by dest. The number of values in dest must be the same as the
 // number of columns in Rows.
-func (r *RowsImpl) Scan(dest ...interface{}) error {
+func (r RowsImpl) Scan(dest ...interface{}) error {
 	return r.R.Scan(dest)
 }
