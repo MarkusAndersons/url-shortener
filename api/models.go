@@ -75,13 +75,13 @@ type RowsImpl struct {
 // Exec executes a query without returning any rows.
 // The args are for any placeholder parameters in the query.
 func (d *Database) Exec(query string, args ...interface{}) (sql.Result, error) {
-	return d.Db.Exec(query, args)
+	return d.Db.Exec(query, args...)
 }
 
 // Query executes a query that returns rows, typically a SELECT.
 // The args are for any placeholder parameters in the query.
 func (d *Database) Query(query string, args ...interface{}) (Rows, error) {
-	r, err := d.Db.Query(query, args)
+	r, err := d.Db.Query(query, args...)
 	return RowsImpl{R: r}, err
 }
 

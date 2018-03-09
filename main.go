@@ -23,6 +23,7 @@ func main() {
 	}
 	database := api.Database{Db: db}
 	if err := api.DbInit(&database); err != nil {
+		log.Printf(err.Error())
 		log.Fatalf("Error creating database")
 	}
 
