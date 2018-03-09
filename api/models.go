@@ -107,5 +107,5 @@ func (r RowsImpl) Next() bool {
 // at by dest. The number of values in dest must be the same as the
 // number of columns in Rows.
 func (r RowsImpl) Scan(dest ...interface{}) error {
-	return r.R.Scan(dest)
+	return r.R.Scan(dest...)
 }
